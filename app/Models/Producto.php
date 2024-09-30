@@ -22,6 +22,7 @@ class Producto extends Model
         'user_id'
     ];
 
+    //Se ocultan los campos en la base de datos
     protected $hidden = ['created_at', 'updated_at'];
 
      //Relaciones un user

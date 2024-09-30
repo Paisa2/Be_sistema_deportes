@@ -13,17 +13,33 @@ use Illuminate\Support\Facades\Route;
 | is assigned the "api" middleware group. Enjoy building your API!
 |
 */
-
 Route::middleware('auth:api')->get('/user', function (Request $request) {
     return $request->user();
 });
+
+Route::get("/", function(){
+    return response()->json(["api" => "API REST-FUll de la libreria PDF"]);
+});
+
 
 //http://localhost:8080/api/prueba
 Route::get('/prueba', function() {
     return \App\Models\Producto::all();
 });
 
-Route::get('productos',[\App\Http\Controllers\ProductoController::class, 'index']);
-Route::get('productos/{producto}',[\App\Http\Controllers\ProductoController::class, 'show']);
-Route::delete('productos/{producto}',[\App\Http\Controllers\ProductoController::class, 'destroy']);
-Route::post('productos', [\App\Http\Controllers\ProductoController::class, 'store']);
+Route::post('login', [\App\Http\Controllers\UserController::class, 'login'])->name('login');
+
+Route::group(['middleware' => 'auth:api'], function () {
+
+    // esto son rutas del crud producto ya determinadas
+    Route::apiResource('productos', \App\Http\Controllers\ProductoController::class);
+
+    // estos son rutas del producto creadas fuera del crud
+    Route::put('set_like/{id}', [App\Http\Controllers\ProductoController::class, 'setLike'])->name('set_like');
+    Route::put('set_dislike/{id}', [App\Http\Controllers\ProductoController::class, 'setDislike'])->name('set_dislike');
+    Route::put('set_imagen/{id}', [App\Http\Controllers\ProductoController::class, 'setImagen'])->name('set_imagen');
+
+});
+
+
+
