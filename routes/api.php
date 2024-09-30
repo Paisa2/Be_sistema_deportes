@@ -31,15 +31,19 @@ Route::post('login', [\App\Http\Controllers\UserController::class, 'login'])->na
 
 Route::group(['middleware' => 'auth:api'], function () {
 
-    // esto son rutas del crud producto ya determinadas
-    Route::apiResource('productos', \App\Http\Controllers\ProductoController::class);
-
-    // estos son rutas del producto creadas fuera del crud
+     // esto son rutas del crud producto ya determinadas
+    Route::apiResource('productos', App\Http\Controllers\ProductoController::class);
+       // estos son rutas del producto creadas fuera del crud
     Route::put('set_like/{id}', [App\Http\Controllers\ProductoController::class, 'setLike'])->name('set_like');
     Route::put('set_dislike/{id}', [App\Http\Controllers\ProductoController::class, 'setDislike'])->name('set_dislike');
     Route::put('set_imagen/{id}', [App\Http\Controllers\ProductoController::class, 'setImagen'])->name('set_imagen');
 
+    Route::post('logout', [\App\Http\Controllers\UserController::class, 'logout'])->name('logout');
+
 });
+
+
+
 
 
 
