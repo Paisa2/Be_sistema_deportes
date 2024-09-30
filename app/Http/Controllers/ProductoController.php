@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Producto;
 use Illuminate\Http\Request;
 use App\Http\Requests\CreateProductoRequest;
+use App\Http\Requests\UpdateProductoRequest;
 
 class ProductoController extends Controller
 {
@@ -52,7 +53,7 @@ class ProductoController extends Controller
         $input = $request->all();
 
         //V todo recoger el usuario autenticado
-        $input['user_id'] = 1;
+        $input['user_id'] = auth()->user()->id;
         $producto = Producto::create($input);
 
         return response()->json(["res" => true, "message" => "Registrado correctamente!"], 200);
@@ -68,8 +69,9 @@ class ProductoController extends Controller
     public function show($id)
     {
         //selec * from producto where id = $id
-        $producto = Producto::with(['user:id,email,name'])->find($id);
-        return $producto;
+        $producto = Producto::with(['user:id,email,name'])->findOrFail($id);
+        return response()->json($producto, 200);
+
     }
 
     /**
@@ -78,10 +80,15 @@ class ProductoController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @param  int  $id
      * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, $id)
+     */// Modificar registros de la bd
+    public function update(UpdateProductoRequest $request, $id)
     {
-        //
+        //update producto set nombre = $request_________where id = $id
+        $input = $request->all();
+        $producto = Producto::find($id);
+        $producto->update($input);
+
+        return response()->json(["res" => true, "message" => "Modificado correctamente!"], 200);
     }
 
     /**
@@ -101,5 +108,38 @@ class ProductoController extends Controller
         catch(\Exception $e) {
             return \response()->json(['res' => false, 'message' => $e->getMessage()], 500);
         }
+    }
+
+    //Metodo de incrementar like de producto
+    public function setLike($id) {
+        $producto = Producto::find($id);
+        $producto->like = $producto->like + 1;
+        $producto->save();
+
+        return \response()->json(['res' => true, 'message' => 'mas un like'], 200);
+    }
+
+    public function setDislike($id) {
+        $producto = Producto::find($id);
+        $producto->dislike = $producto->dislike + 1;
+        $producto->save();
+
+        return \response()->json(['res' => true, 'message' => 'mas un dislike'], 200);
+    }
+
+    private function cargarImagen($file, $id)
+    {
+        $nombreArchivo = time() . "_{$id}." . $file->getClientOriginalExtension();
+        $file->move(public_path('imagenes'), $nombreArchivo);
+        return $nombreArchivo;
+    }
+
+    //Metodo de subir imagen
+    public function setImagen(Request $request, $id)
+    {
+        $producto = Producto::find($id);
+        $producto->url_imagen = $this->cargarImagen($request->imagen, $id);
+        $producto->save();
+        return response()->json(["res" => true, "message" => "Imagen cargada correctamente!"], 200);
     }
 }
