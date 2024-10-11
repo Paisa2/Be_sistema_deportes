@@ -24,6 +24,6 @@ class Categoria extends Model
 
     public function entrenador()
     {
-        return $this->hasMany(Entrenador::class, 'entrenador_id');
+        return $this->belongsTo(Entrenador::class, 'entrenador_id');
     }
 }

@@ -19,7 +19,6 @@ class Disiplina extends Model
     //Se ocultan los campos en la base de datos
     protected $hidden = ['created_at', 'updated_at'];
 
-     //Relaciones un user
     public function user()
     {
         return $this->belongsTo(User::class, 'user_id');
@@ -27,7 +26,7 @@ class Disiplina extends Model
 
     public function entrenador()
     {
-        return $this->belongsTo(User::class, 'entrenador_id');
+        return $this->belongsTo(Entrenador::class, 'entrenador_id');
     }
 
     public function categoria()

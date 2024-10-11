@@ -21,7 +21,8 @@ class CreateDisiplinasTable extends Migration
             //Relacion de table de uno a muchos
             $table->unsignedBigInteger('user_id');
             $table->foreign('user_id')
-                    ->references('id')->on('users')
+                    ->references('id')
+                    ->on('users')
                     ->onUpdate('cascade')
                     ->onDelete('cascade');
             $table->timestamps();

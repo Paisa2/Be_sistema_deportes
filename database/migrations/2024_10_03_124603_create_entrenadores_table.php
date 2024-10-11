@@ -26,6 +26,14 @@ class CreateEntrenadoresTable extends Migration
                     ->references('id')->on('disiplinas')
                     ->onUpdate('cascade')
                     ->onDelete('cascade');
+
+            //Relacion de table de uno a muchos
+            $table->unsignedBigInteger('user_id');
+            $table->foreign('user_id')
+                    ->references('id')
+                    ->on('users')
+                    ->onUpdate('cascade')
+                    ->onDelete('cascade');
             $table->timestamps();
         });
     }

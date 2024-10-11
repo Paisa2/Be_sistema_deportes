@@ -27,9 +27,9 @@ Route::get('/prueba', function() {
     return \App\Models\Producto::all();
 });
 
-Route::post('login', [\App\Http\Controllers\UserController::class, 'login'])->name('login');
+// Route::post('login', [\App\Http\Controllers\UserController::class, 'login'])->name('login');
 
-Route::group(['middleware' => 'auth:api'], function () {
+// Route::group(['middleware' => 'auth:api'], function () {
 
      // esto son rutas del crud producto ya determinadas
     Route::apiResource('productos', App\Http\Controllers\ProductoController::class);
@@ -38,9 +38,12 @@ Route::group(['middleware' => 'auth:api'], function () {
     Route::put('set_dislike/{id}', [App\Http\Controllers\ProductoController::class, 'setDislike'])->name('set_dislike');
     Route::put('set_imagen/{id}', [App\Http\Controllers\ProductoController::class, 'setImagen'])->name('set_imagen');
 
+    // esto son rutas del crud disiplina ya determinadas
+    Route::apiResource('disiplinas', App\Http\Controllers\DiusiplinaController::class);
+
     Route::post('logout', [\App\Http\Controllers\UserController::class, 'logout'])->name('logout');
 
-});
+// });
 
 
 
