@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\CreateDisiplinaRequest;
+use App\Http\Requests\UpdateDisiplinaRequest;
 use App\Models\Disiplina;
 use Illuminate\Http\Request;
 
@@ -67,7 +68,7 @@ class DiusiplinaController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(UpdateDisiplinaRequest $request, $id)
     {
         $input = $request->all();
         $disiplina = Disiplina::find($id);

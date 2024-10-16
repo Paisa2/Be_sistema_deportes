@@ -26,7 +26,7 @@ class Disiplina extends Model
 
     public function entrenador()
     {
-        return $this->belongsTo(Entrenador::class, 'entrenador_id');
+        return $this->belongsToMany(Entrenador::class, 'entrenador_id');
     }
 
     public function categoria()

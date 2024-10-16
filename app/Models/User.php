@@ -49,4 +49,13 @@ class User extends Authenticatable
         return $this->hasMany(Producto::class);
     }
 
+    public function disiplinas()
+    {
+        return $this->hasMany(Disiplina::class);
+    }
+
+    public function entrenadores()
+    {
+        return $this->hasMany(Entrenador::class);
+    }
 }

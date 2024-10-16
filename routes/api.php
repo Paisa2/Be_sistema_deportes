@@ -41,6 +41,14 @@ Route::get('/prueba', function() {
     // esto son rutas del crud disiplina ya determinadas
     Route::apiResource('disiplinas', App\Http\Controllers\DiusiplinaController::class);
 
+    // esto son rutas del crud categoria ya determinadas
+    Route::apiResource('categorias', App\Http\Controllers\CategoriaController::class);
+
+    // esto son rutas del crud entrenador ya determinadas
+    Route::apiResource('entrenadores', App\Http\Controllers\EntrenadorController::class);
+
+    // Route::post('logout', [\App\Http\Controllers\UserController::class, 'logout'])->name('logout');
+
     Route::post('logout', [\App\Http\Controllers\UserController::class, 'logout'])->name('logout');
 
 // });

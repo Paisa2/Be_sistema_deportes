@@ -22,7 +22,7 @@ class Entrenador extends Model
 
     public function diciplinas()
     {
-        return $this->hasMany(Disiplina::class, 'diciplina_id');
+        return $this->belongsToMany(Disiplina::class, 'diciplina_id');
     }
 
     public function categoria()
